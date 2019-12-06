@@ -15,6 +15,7 @@ public class MachineBehaviour : MonoBehaviour
     private float _currentHp = 100f;
     private float _recoverStoppedCounter = 0;
     private float _brokenPenaltyCounter = 0;
+    private Vector3 cameraOriginPos;
 
     // Start is called before the first frame update
     private void Start()
@@ -27,6 +28,8 @@ public class MachineBehaviour : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if(Time.timeScale == 0)
+            return;
         switch (state)
         {
             case MachineState.Normal:
@@ -61,12 +64,12 @@ public class MachineBehaviour : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider collider)
+    private void OnTriggerEnter(Collider collider)
     {
         // 만약 플레이어가 맞는 도구를 들고있다면 state = MachineState.Recovering;
-        if (!collider.CompareTag("Player"))
+        if (collider.tag != "Player")
             return;
-        if (state != MachineState.Recovering && collider.GetComponent<PlayerController>().tool == targetToolType)
+        if (collider.GetComponent<PlayerController>().tool == targetToolType)
         {
             state = MachineState.Recovering;
             if (transform.position.x > 0)
@@ -80,7 +83,7 @@ public class MachineBehaviour : MonoBehaviour
     private void OnTriggerExit(Collider collider)
     {
         // state == MachineState.Recovering일 경우 
-        if (!collider.CompareTag("Player"))
+        if (collider.tag != "Player")
             return;
         if (state == MachineState.Recovering)
         {
@@ -107,10 +110,28 @@ public class MachineBehaviour : MonoBehaviour
 
     void BrokenMashine()
     {
-        if(transform.position.x > 0)
-            gamecontroller.RightOverCount();
-        else
-            gamecontroller.LeftOverCount();
+
+        foreach(Camera camera in FindObjectsOfType<Camera>())
+        {
+            if (transform.position.x > 0)
+            {
+                if (camera.gameObject.layer == LayerMask.NameToLayer("Right"))
+                {
+                    cameraOriginPos = camera.transform.position;
+                    gamecontroller.RightOverCount();
+                    StartCoroutine(Shake(camera.gameObject, 0.1f, 0.5f));
+                }
+            }
+            else
+            {
+                if (camera.gameObject.layer == LayerMask.NameToLayer("Left"))
+                {
+                    cameraOriginPos = camera.transform.position;
+                    gamecontroller.LeftOverCount();
+                    StartCoroutine(Shake(camera.gameObject, 0.1f, 0.5f));
+                }
+            }
+        }
     }
 
     private void UpdateHpBar()
@@ -142,4 +163,22 @@ public class MachineBehaviour : MonoBehaviour
         }
         hpBarImage.color = barColor;
     }
+    public IEnumerator Shake(GameObject camera, float _amount, float _duration)
+    {
+        float timer = 0;
+        while (timer <= _duration)
+        {
+            if (Time.timeScale == 0)
+                _duration = 0;
+
+            Vector3 shakeVec = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f)) * _amount + cameraOriginPos;
+            camera.transform.localPosition = shakeVec;
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        camera.transform.localPosition = cameraOriginPos;
+
+    }
+
 }
