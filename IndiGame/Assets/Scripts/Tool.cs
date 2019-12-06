@@ -25,7 +25,7 @@ public class Tool : MonoBehaviour
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Right"))
             {
-                Debug.Log("오른쪽");
+ 
                 gameObject.layer = LayerMask.NameToLayer("RightTool");
             }
             else if (other.gameObject.layer == LayerMask.NameToLayer("Left"))

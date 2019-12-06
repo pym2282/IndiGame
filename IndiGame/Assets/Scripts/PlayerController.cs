@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 using Enums;
 
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 originPos;
     private Vector3 originScale;
     public Camera camera;
+    private float time;
 
 
     public ToolType tool;
@@ -94,7 +96,7 @@ public class PlayerController : MonoBehaviour
             return new Vector3(transform.position.x, transform.position.y + i, transform.position.z);
         }
 
-        if (col.CompareTag("Throw"))
+        if (col.CompareTag("Throw")) // 던지기 영역에 갔을때
         {
             if (transform.childCount == 0)
                 return;
@@ -116,10 +118,13 @@ public class PlayerController : MonoBehaviour
         }
         else if (col.CompareTag("Tool")) // 도구를 주웠을 때
         {
-            col.transform.parent = transform;
-            col.transform.position = playerVec(1);
-            col.GetComponent<Rigidbody>().isKinematic = true;
-            tool = col.GetComponent<Tool>().toolType;
+            if (tool == ToolType.None)
+            {
+                col.transform.parent = transform;
+                col.transform.position = playerVec(1);
+                col.GetComponent<Rigidbody>().isKinematic = true;
+                tool = col.GetComponent<Tool>().toolType;
+            }
         }
     }
 }
