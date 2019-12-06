@@ -7,6 +7,7 @@ using Enums;
 public class MachineBehaviour : MonoBehaviour
 {
     public MachineState state = MachineState.Normal;
+    public ToolType targetToolType;
     public Image hpBarImage;
 
     private float _currentHp = 100f;
