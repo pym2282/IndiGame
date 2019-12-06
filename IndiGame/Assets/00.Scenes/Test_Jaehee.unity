@@ -155,8 +155,8 @@ MonoBehaviour:
   - {fileID: -4363322413158767126, guid: cb6477a60f6894c4c87014a62f1dba82, type: 3}
   - {fileID: -1534369488603193559, guid: 3dc77e7801a275b46be909288de858f5, type: 3}
   - {fileID: 41303003580431022, guid: da744f812ffe3c542aaf538bd4f2553e, type: 3}
-  leftPlayArea: {fileID: 1485440631}
-  rightPlayArea: {fileID: 1317924880}
+  leftPlayArea: {fileID: 0}
+  rightPlayArea: {fileID: 0}
   currentPossibleDamagedMachineCount: 2
   machineDamageCheckInterval: 3
   machineDamageProbability: 0.05
@@ -168,6 +168,20 @@ MonoBehaviour:
   machineMinGreenHp: 70
   machineMinYellowHp: 30
   machineMinRedHp: 0
+  machineDamageProbabilityWithTime:
+  - timing: 0
+    value: 0.05
+  - timing: 30
+    value: 0.2
+  - timing: 60
+    value: 0.5
+  machinePossibleDamagedCountWithTime:
+  - timing: 0
+    value: 2
+  - timing: 30
+    value: 3
+  - timing: 60
+    value: 4
 --- !u!4 &425291079
 Transform:
   m_ObjectHideFlags: 0
