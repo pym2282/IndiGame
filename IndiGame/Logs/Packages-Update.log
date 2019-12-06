@@ -43,3 +43,25 @@ The following packages were added:
   com.unity.modules.vr@1.0.0
   com.unity.modules.wind@1.0.0
   com.unity.modules.xr@1.0.0
+
+=== Sat Dec  7 05:36:41 2019
+
+Packages were changed.
+Update Mode: mergeDefaultDependencies
+
+The following packages were added:
+  com.unity.package-manager-ui@2.0.7
+  com.unity.probuilder@4.1.0
+  com.unity.progrids@3.0.3-preview.4
+
+=== Sat Dec  7 06:32:05 2019
+
+Packages were changed.
+Update Mode: resetToDefaultDependencies
+
+The following packages were removed:
+  com.unity.2d.sprite@1.0.0
+  com.unity.2d.tilemap@1.0.0
+  com.unity.package-manager-ui@2.0.7
+  com.unity.probuilder@4.1.0
+  com.unity.progrids@3.0.3-preview.4
