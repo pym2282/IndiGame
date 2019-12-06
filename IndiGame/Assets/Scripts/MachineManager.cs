@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class MachineManager : MonoBehaviour
 {
+    [System.Serializable]
+    public class TimingFloatValuePair
+    {
+        public float timing;
+        public float value;
+    }
+    [System.Serializable]
+    public class TimingIntValuePair
+    {
+        public float timing;
+        public int value;
+    }
     static private MachineManager _instance;
     static public MachineManager Instance { get { return _instance; } }
     public MachineBehaviour[] machinePrefabs;
@@ -20,14 +32,20 @@ public class MachineManager : MonoBehaviour
     public float machineMinGreenHp = 70f;
     public float machineMinYellowHp = 30f;
     public float machineMinRedHp = 0f;
+    public TimingFloatValuePair[] machineDamageProbabilityWithTime;
+    public TimingIntValuePair[] machinePossibleDamagedCountWithTime;
 
     private float _machineDamageCheckCounter;
+    private int _damageProbListIndex = 0;
+    private int _possibleDamagedCountListIndex = 0;
+    private float _elapsedTime = 0;
 
     [HideInInspector]
     public Dictionary<PlayableArea, List<MachineBehaviour>> SpawnedMachines { get; private set; } = new Dictionary<PlayableArea, List<MachineBehaviour>>();
 
     private void Awake()
     {
+        // 이거 싱글톤이면 안될것같은데...
         if (_instance == null)
         {
             _instance = this;
@@ -49,6 +67,18 @@ public class MachineManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        _elapsedTime += Time.deltaTime;
+        if (_damageProbListIndex < machineDamageProbabilityWithTime.Length && machineDamageProbabilityWithTime[_damageProbListIndex].timing <= _elapsedTime)
+        {
+            machineDamageProbability = machineDamageProbabilityWithTime[_damageProbListIndex].value;
+            _damageProbListIndex++;
+        }
+        if (_possibleDamagedCountListIndex < machinePossibleDamagedCountWithTime.Length && machinePossibleDamagedCountWithTime[_possibleDamagedCountListIndex].timing <= _elapsedTime)
+        {
+            currentPossibleDamagedMachineCount = machinePossibleDamagedCountWithTime[_possibleDamagedCountListIndex].value;
+            _possibleDamagedCountListIndex++;
+        }
+
         _machineDamageCheckCounter -= Time.deltaTime;
         if (_machineDamageCheckCounter <= 0)
         {
