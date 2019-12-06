@@ -45,15 +45,11 @@ public class MachineManager : MonoBehaviour
 
     private void Awake()
     {
-        // 이거 싱글톤이면 안될것같은데...
-        if (_instance == null)
+        if (_instance != null && _instance != this)
         {
-            _instance = this;
+            Destroy(_instance.gameObject);
         }
-        else if (_instance != this)
-        {
-            Destroy(this.gameObject);
-        }
+        _instance = this;
     }
 
     // Start is called before the first frame update
