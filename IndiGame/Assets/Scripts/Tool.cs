@@ -21,11 +21,25 @@ public class Tool : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.transform.CompareTag("Ground") || other.transform.CompareTag("Player"))
+        if (other.transform.CompareTag("Ground"))
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Right"))
             {
- 
+                gameObject.layer = LayerMask.NameToLayer("RightTool");
+            }
+            else if (other.gameObject.layer == LayerMask.NameToLayer("Left"))
+            {
+                Debug.Log("왼쪽");
+                gameObject.layer = LayerMask.NameToLayer("LeftTool");
+            }
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.CompareTag("Player"))
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Right"))
+            {
                 gameObject.layer = LayerMask.NameToLayer("RightTool");
             }
             else if (other.gameObject.layer == LayerMask.NameToLayer("Left"))
