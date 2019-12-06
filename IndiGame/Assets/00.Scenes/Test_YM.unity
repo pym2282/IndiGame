@@ -180,7 +180,7 @@ SpriteRenderer:
   m_SortingLayerID: -153770781
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 00e9591e569e1d94da14d68ae79945b9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5e19f1dc02014a9478382c0d61492e78, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -198,7 +198,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 30406880}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5, y: -2, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f450fe1186cf774daea0df011ec4fef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toolType: 2
 --- !u!1 &162553004
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,7 +350,7 @@ GameObject:
   - component: {fileID: 508159269}
   m_Layer: 8
   m_Name: RightPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -369,6 +370,7 @@ MonoBehaviour:
   isRight: 1
   speed: 3
   camera: {fileID: 162553006}
+  tool: 0
 --- !u!54 &508159266
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -653,7 +655,7 @@ GameObject:
   - component: {fileID: 1180756850}
   m_Layer: 9
   m_Name: LeftPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -673,6 +675,7 @@ MonoBehaviour:
   isRight: 0
   speed: 3
   camera: {fileID: 0}
+  tool: 0
 --- !u!54 &1180756847
 Rigidbody:
   m_ObjectHideFlags: 0
