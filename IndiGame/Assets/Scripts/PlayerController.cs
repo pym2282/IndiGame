@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0)
+            return;
         if (isRight)
         {
             if (Input.GetKey(KeyCode.RightArrow))
@@ -68,22 +70,18 @@ public class PlayerController : MonoBehaviour
 
         if (transform.position.x >= originPos.x + 2.5f)
         {
-            Debug.Log("오른쪽으로 넘었어");
             transform.position = new Vector3(originPos.x + 2.5f, transform.position.y, transform.position.z);
         }
         if (transform.position.x <= originPos.x - 2.5f)
         {
-            Debug.Log("이ㅗㄴ쪽으로 넘었어");
             transform.position = new Vector3(originPos.x - 2.5f, transform.position.y, transform.position.z);
         }
         if (transform.position.z >= originPos.z + 2.5f)
         {
-            Debug.Log("위로 넘었어");
             transform.position = new Vector3(transform.position.x, transform.position.y, originPos.z + 2.5f);
         }
         if (transform.position.z <= originPos.z - 2.5f)
         {
-            Debug.Log("아래로 넘었어");
             transform.position = new Vector3(transform.position.x, transform.position.y, originPos.z - 2.5f);
         }
 

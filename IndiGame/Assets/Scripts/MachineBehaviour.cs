@@ -9,7 +9,9 @@ public class MachineBehaviour : MonoBehaviour
     public MachineState state = MachineState.Normal;
     public ToolType targetToolType;
     public Image hpBarImage;
+    public bool isRight;
 
+    private GameController gamecontroller;
     private float _currentHp = 100f;
     private float _recoverStoppedCounter = 0;
     private float _brokenPenaltyCounter = 0;
@@ -17,6 +19,7 @@ public class MachineBehaviour : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        gamecontroller = FindObjectOfType<GameController>();
         _currentHp = MachineManager.Instance.machineMaxHp;
         UpdateHpBar();
     }
@@ -63,10 +66,14 @@ public class MachineBehaviour : MonoBehaviour
         // 만약 플레이어가 맞는 도구를 들고있다면 state = MachineState.Recovering;
         if (collider.tag != "Player")
             return;
-        Debug.Log(collider.GetComponent<PlayerController>().tool+"/"+ targetToolType);
         if (collider.GetComponent<PlayerController>().tool == targetToolType)
         {
             state = MachineState.Recovering;
+            if (transform.position.x > 0)
+                gamecontroller.rightCount--;
+            else
+                gamecontroller.leftCount--;
+
         }
     }
 
@@ -87,6 +94,7 @@ public class MachineBehaviour : MonoBehaviour
         if (_currentHp <= 0 && state == MachineState.Damaged)
         {
             state = MachineState.Broken;
+            BrokenMashine();
             _brokenPenaltyCounter = MachineManager.Instance.machineBrokePenaltyTime;
         }
         else if (_currentHp >= MachineManager.Instance.machineMaxHp)
@@ -95,6 +103,14 @@ public class MachineBehaviour : MonoBehaviour
         }
 
         UpdateHpBar();
+    }
+
+    void BrokenMashine()
+    {
+        if(transform.position.x > 0)
+            gamecontroller.RightOverCount();
+        else
+            gamecontroller.LeftOverCount();
     }
 
     private void UpdateHpBar()
