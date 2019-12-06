@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tool
   - Throw
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - 
   - Right
   - Left
-  - 
-  - 
+  - RightTool
+  - LeftTool
   - 
   - 
   - 
@@ -42,4 +43,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Object
+    uniqueID: 4141196515
+    locked: 0
+  - name: Player
+    uniqueID: 3269211727
     locked: 0
