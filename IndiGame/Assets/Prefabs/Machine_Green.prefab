@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4966345139530303849}
   - component: {fileID: 6014554651136037334}
   - component: {fileID: -4363322413158767126}
+  - component: {fileID: -3720786627751493776}
   m_Layer: 0
   m_Name: Machine_Green
   m_TagString: Untagged
@@ -97,6 +98,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   hpBarImage: {fileID: 1733587354708420039}
+--- !u!65 &-3720786627751493776
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5739236314767399916}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3, y: 0.16, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5535853881207323709
 PrefabInstance:
   m_ObjectHideFlags: 0
