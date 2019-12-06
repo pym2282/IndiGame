@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Enums;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,8 +9,11 @@ public class PlayerController : MonoBehaviour
     public int speed = 3;
     private Vector3 originPos;
     private Vector3 originScale;
-    private bool isHandUp = false;
     public Camera camera;
+
+
+    public ToolType tool;
+    
 
     private void Awake()
     {
@@ -109,15 +113,15 @@ public class PlayerController : MonoBehaviour
                 {
                     target.GetComponent<Tool>().Throw(-8);
                 }
+                tool = ToolType.None;
             }
         }
-        else if (col.CompareTag("Tool"))
+        else if (col.CompareTag("Tool")) // 도구를 주웠을 때
         {
-
-            Debug.Log("붙어부러");
             col.transform.parent = transform;
             col.transform.position = playerVec(1);
             col.GetComponent<Rigidbody>().isKinematic = true;
+            tool = col.GetComponent<Tool>().toolType;
         }
     }
 }

@@ -7,6 +7,7 @@ TagManager:
   - Tool
   - Throw
   - Ground
+  - Mashine
   layers:
   - Default
   - TransparentFX
