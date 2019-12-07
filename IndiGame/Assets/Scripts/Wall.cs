@@ -18,7 +18,7 @@ public class Wall : MonoBehaviour
 		transform.position -= new Vector3(0f, speed);
 
 		if (transform.position.y < returnPosition) {
-			transform.position = new Vector3(-2.8f, originalPosition);
+			transform.position = new Vector3(0f, originalPosition);
 		}
 	}
 }
