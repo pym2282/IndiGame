@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
     private void Update()
     {
         time += Time.deltaTime;
+        if(!isGameover)
         timeText.text = "Time : " + time.ToString("0.00");
     }
     public void RightOverCount()
