@@ -75,6 +75,11 @@ public class MachineManager : MonoBehaviour
             _possibleDamagedCountListIndex++;
         }
 
+        if (!CanDamageMachine())
+        {
+            return;
+        }
+
         _machineDamageCheckCounter -= Time.deltaTime;
         if (_machineDamageCheckCounter <= 0)
         {
@@ -146,5 +151,27 @@ public class MachineManager : MonoBehaviour
             machineList.Add(spawned);
         }
         SpawnedMachines.Add(areaType, machineList);
+    }
+
+    private bool CanDamageMachine()
+    {
+        int damagedCount = 0;
+        foreach (MachineBehaviour mb in SpawnedMachines[PlayableArea.Left])
+        {
+            if (mb.state == MachineState.Broken || mb.state == MachineState.Normal)
+            {
+                continue;
+            }
+            damagedCount++;
+        }
+        foreach (MachineBehaviour mb in SpawnedMachines[PlayableArea.Right])
+        {
+            if (mb.state == MachineState.Broken || mb.state == MachineState.Normal)
+            {
+                continue;
+            }
+            damagedCount++;
+        }
+        return damagedCount < currentPossibleDamagedMachineCount;
     }
 }
