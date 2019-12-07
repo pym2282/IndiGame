@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
 
     public int rightCount = 0;
     public int leftCount = 0;
+    public int gameOverCount = 3;
 
     private void Start()
     {
@@ -26,7 +27,7 @@ public class GameController : MonoBehaviour
     public void RightOverCount()
     {
         rightCount++;
-        if (rightCount == 3)
+        if (rightCount >= gameOverCount)
         {
             Gameover();
         }
@@ -34,7 +35,7 @@ public class GameController : MonoBehaviour
     public void LeftOverCount()
     {
         leftCount++;
-        if (leftCount == 3)
+        if (leftCount >= gameOverCount)
         {
             Gameover();
         }
@@ -49,5 +50,6 @@ public class GameController : MonoBehaviour
     {
         Debug.Log(SceneManager.GetActiveScene().name);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
     }
 }

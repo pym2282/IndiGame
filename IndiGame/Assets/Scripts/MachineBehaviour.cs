@@ -64,26 +64,28 @@ public class MachineBehaviour : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider collider)
+    private void OnTriggerStay(Collider collider)
     {
         // 만약 플레이어가 맞는 도구를 들고있다면 state = MachineState.Recovering;
-        if (collider.tag != "Player")
+        if (!collider.CompareTag("Player"))
             return;
-        if (collider.GetComponent<PlayerController>().tool == targetToolType)
+        if (state != MachineState.Recovering && collider.GetComponent<PlayerController>().tool == targetToolType)
         {
+            if (state == MachineState.Broken)
+            {
+                if (transform.position.x > 0)
+                    gamecontroller.rightCount--;
+                else
+                    gamecontroller.leftCount--;
+            }
             state = MachineState.Recovering;
-            if (transform.position.x > 0)
-                gamecontroller.rightCount--;
-            else
-                gamecontroller.leftCount--;
-
         }
     }
 
     private void OnTriggerExit(Collider collider)
     {
         // state == MachineState.Recovering일 경우 
-        if (collider.tag != "Player")
+        if (!collider.CompareTag("Player"))
             return;
         if (state == MachineState.Recovering)
         {
