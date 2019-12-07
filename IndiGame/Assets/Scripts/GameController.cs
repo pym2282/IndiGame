@@ -18,6 +18,9 @@ public class GameController : MonoBehaviour
     public AudioSource audioManager;
 
     public GameObject[] destroyObj;
+    public RankingUIBehaviour rankingCanvas;
+    public Rigidbody[] playerRb;
+    public float Time { get; private set; }
 
     public int rightCount = 0;
     public int leftCount = 0;
@@ -31,9 +34,9 @@ public class GameController : MonoBehaviour
     }
     private void Update()
     {
-        time += Time.deltaTime;
-        if(!isGameover)
-        timeText.text = "Time : " + time.ToString("0.00");
+        if (!isGameover)
+        Time += UnityEngine.Time.deltaTime;
+        timeText.text = "Time : " + Time.ToString("0.00");
     }
     public void RightOverCount()
     {
@@ -63,11 +66,18 @@ public class GameController : MonoBehaviour
         FindObjectOfType<Wall>().speed = 0;
     }
 
+    public void ShowRanking()
+    {
+        gameoverCanvas.SetActive(false);
+        rankingCanvas.gameObject.SetActive(true);
+        rankingCanvas.Init();
+    }
+
     public void ReStart()
     {
         Debug.Log(SceneManager.GetActiveScene().name);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Time.timeScale = 1;
+        UnityEngine.Time.timeScale = 1;
     }
 
     void ExplodeTile(int num)
