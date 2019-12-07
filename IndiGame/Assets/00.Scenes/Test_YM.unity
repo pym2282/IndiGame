@@ -2018,7 +2018,8 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 7.05e-43, y: 6e-45, z: 0, w: 7.13e-43}
+  m_BoundingSphereOverride: {x: 0.0009248175, y: 0.00092499144, z: 4.0057846e-11,
+    w: 0.000000002680406}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -4171,15 +4172,15 @@ MonoBehaviour:
   machineMinRedHp: 0
   machineDamageProbabilityWithTime:
   - timing: 0
-    value: 0.1
+    value: 0.15
   - timing: 15
     value: 0.3
   - timing: 45
     value: 0.4
   - timing: 60
     value: 0.5
-  - timing: 60
-    value: 0.5
+  - timing: 75
+    value: 0.6
   - timing: 90
     value: 0.7
   machinePossibleDamagedCountWithTime:
