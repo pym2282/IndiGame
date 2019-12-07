@@ -273,7 +273,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &135306224
 PrefabInstance:
@@ -2099,6 +2099,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pipe_M_snaps002 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1135203655215930, guid: 4d225f970f8e37d4e820f1cb8440987b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4238871909904612, guid: 4d225f970f8e37d4e820f1cb8440987b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.71
@@ -2797,6 +2801,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WClamp_03_snaps002 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1338108776501102, guid: 2720f7020a384934482be714bb621466, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4367808484079340, guid: 2720f7020a384934482be714bb621466, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.4800005
@@ -2988,7 +2996,7 @@ MonoBehaviour:
   machineDamageCheckInterval: 5
   machineDamageProbability: 0.03
   machineMaxHp: 100
-  machineBrokePenaltyTime: 3
+  machineBrokePenaltyTime: 5
   machineRecoverStopTime: 3
   machineDamagePerSec: 10
   machineRecoverPerSec: 20
@@ -3004,6 +3012,10 @@ MonoBehaviour:
     value: 0.4
   - timing: 60
     value: 0.5
+  - timing: 60
+    value: 0.5
+  - timing: 90
+    value: 0.7
   machinePossibleDamagedCountWithTime:
   - timing: 0
     value: 1
@@ -3195,6 +3207,10 @@ PrefabInstance:
     - target: {fileID: 1338108776501102, guid: 2720f7020a384934482be714bb621466, type: 3}
       propertyPath: m_Name
       value: WClamp_03_snaps002 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1338108776501102, guid: 2720f7020a384934482be714bb621466, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4367808484079340, guid: 2720f7020a384934482be714bb621466, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3581,6 +3597,10 @@ PrefabInstance:
     - target: {fileID: 1338108776501102, guid: 2720f7020a384934482be714bb621466, type: 3}
       propertyPath: m_Name
       value: WClamp_03_snaps002 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1338108776501102, guid: 2720f7020a384934482be714bb621466, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4367808484079340, guid: 2720f7020a384934482be714bb621466, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4543,7 +4563,7 @@ RectTransform:
   - {fileID: 1719303725}
   - {fileID: 1602820919}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5160,7 +5180,7 @@ Transform:
   - {fileID: 592233347}
   - {fileID: 88888393}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1856547756
 PrefabInstance:
