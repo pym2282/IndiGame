@@ -8,22 +8,17 @@ public class PlayerController : MonoBehaviour
 {
     public bool isRight;
     public int speed = 3;
-    private Vector3 originPos;
-    private Vector3 originScale;
     public Camera camera;
-    private float time;
-    private Animator anim;
+    public ToolType tool;
 
+    private Vector3 originPos;
     private SpriteRenderer _sprite;
 
-    public ToolType tool;
     
 
     private void Awake()
     {
         originPos = transform.position;
-        originScale = transform.localScale;
-        anim = GetComponent<Animator>();
         _sprite = GetComponent<SpriteRenderer>();
     }
 
@@ -107,7 +102,7 @@ public class PlayerController : MonoBehaviour
 
         if (col.CompareTag("Throw")) // 던지기 영역에 갔을때
         {
-            if (transform.childCount == 0)
+            if (tool == ToolType.None)
                 return;
             Transform target = transform.GetChild(0);
             if (target.gameObject.layer == LayerMask.NameToLayer("RightTool")||
@@ -129,6 +124,7 @@ public class PlayerController : MonoBehaviour
         {
             if (tool == ToolType.None)
             {
+                col.transform.rotation = new Quaternion(0,0,0,0);
                 col.transform.parent = transform;
                 col.transform.position = playerVec(1);
                 col.GetComponent<Rigidbody>().isKinematic = true;

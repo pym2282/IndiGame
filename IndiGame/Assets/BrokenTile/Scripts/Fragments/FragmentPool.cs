@@ -370,7 +370,7 @@ namespace Exploder
                     {
                         foreach (var fragment in pool)
                         {
-                            //fragment.tag = ExploderObject.Tag;
+                            fragment.tag = ExploderObject.Tag;
                         }
                     }
                 }

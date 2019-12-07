@@ -359,7 +359,7 @@ namespace Exploder
 
             if (settings.FragmentOptions.ExplodeFragments)
             {
-                //tag = ExploderObject.Tag;
+                tag = ExploderObject.Tag;
             }
 
             Emit(true);
