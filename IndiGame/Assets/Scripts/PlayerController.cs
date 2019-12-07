@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public int speed = 3;
     public Camera camera;
     public ToolType tool;
+    public bool isGameover = false;
+    public AudioSource playerAudio;
 
     private Vector3 originPos;
     private SpriteRenderer _sprite;
@@ -24,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Time.timeScale == 0)
+        if (Time.timeScale == 0 || isGameover)
             return;
         Move();
 
@@ -118,6 +120,7 @@ public class PlayerController : MonoBehaviour
                     target.GetComponent<Tool>().Throw(-8);
                 }
                 tool = ToolType.None;
+                playerAudio.Play();
             }
         }
         else if (col.CompareTag("Tool")) // 도구를 주웠을 때

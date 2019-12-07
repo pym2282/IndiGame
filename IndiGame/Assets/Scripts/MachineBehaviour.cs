@@ -15,6 +15,7 @@ public class MachineBehaviour : MonoBehaviour
     public GameObject particle;
     public GameObject smokeParticle;
     public GameObject shockParticle;
+    public GameObject clockObj;
 
     private GameController gamecontroller;
     private SpriteRenderer mashineColor;
@@ -22,6 +23,8 @@ public class MachineBehaviour : MonoBehaviour
     private float _recoverStoppedCounter = 0;
     private float _brokenPenaltyCounter = 0;
     private Vector3 cameraOriginPos;
+    private AudioSource mashineAudio;
+    public AudioClip[] audioClip;
     public MachineState State
     {
         get
@@ -61,15 +64,23 @@ public class MachineBehaviour : MonoBehaviour
             else if (value == MachineState.Damaged && _state == MachineState.Normal)
             {
                 StartCoroutine(Paricle(shockParticle));
-                Debug.Log("불이야");
             }
             else if (value == MachineState.Normal && smokeParticle.activeInHierarchy)
             {
                 smokeParticle.SetActive(false);
                 mashineColor.color = Color.white;
+                StartCoroutine(Deley());
             }
             _state = value;
         }
+    }
+
+    IEnumerator Deley()
+    {
+        mashineAudio.clip = audioClip[1];
+        mashineAudio.Play();
+        yield return new WaitForSeconds(0.5f);
+        mashineAudio.clip = audioClip[0];
     }
 
     // Start is called before the first frame update
@@ -82,6 +93,7 @@ public class MachineBehaviour : MonoBehaviour
         shockParticle.SetActive(false);
         smokeParticle.SetActive(false);
         mashineColor = GetComponent<SpriteRenderer>();
+        mashineAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -101,18 +113,31 @@ public class MachineBehaviour : MonoBehaviour
                 break;
 
             case MachineState.Broken:
+                if (mashineAudio.isPlaying)
+                    mashineAudio.Pause();
 
                 break;
 
             case MachineState.Recovering:
                 _recoverStoppedCounter = MachineManager.Instance.machineRecoverStopTime;
+                if (_currentHp < MachineManager.Instance.machineMaxHp && !mashineAudio.isPlaying)
+                {
+                    mashineAudio.Play();
+                    if (!clockObj.activeInHierarchy)
+                    {
+                        clockObj.SetActive(true);
+                    }
+                }
                 if (_brokenPenaltyCounter > 0)
                 {
                     _brokenPenaltyCounter -= Time.deltaTime;
                     break;
                 }
                 AddHp(MachineManager.Instance.machineRecoverPerSec * Time.deltaTime);
-                
+
+                if (clockObj.activeInHierarchy)
+                    clockObj.SetActive(false);
+
                 break;
 
             case MachineState.RecoverStopped:
@@ -154,6 +179,10 @@ public class MachineBehaviour : MonoBehaviour
     private void OnTriggerExit(Collider collider)
     {
         // state == MachineState.Recovering일 경우 
+        if (mashineAudio.isPlaying)
+            mashineAudio.Pause();
+        if (clockObj.activeInHierarchy)
+            clockObj.SetActive(false);
         if (!collider.CompareTag("Player"))
             return;
         if (State == MachineState.Recovering)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-	[SerializeField] private float speed = 3f;
+	public float speed = 3f;
 	[SerializeField] private float originalPosition;
 	[SerializeField] private float returnPosition = -70f;
 
