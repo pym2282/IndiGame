@@ -36,7 +36,7 @@ namespace Exploder
 
         void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
             instance = this;
         }
 
