@@ -16,7 +16,7 @@ public class Tool : MonoBehaviour
     public void Throw(int power)
     {
         rb.isKinematic = false;
-        rb.velocity = new Vector3(-power, 1f, 0);
+        rb.velocity = new Vector3(-power, 0.5f, 0);
     }
 
     private void OnCollisionEnter(Collision other)
