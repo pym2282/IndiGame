@@ -144,8 +144,8 @@ public class MachineManager : MonoBehaviour
             {
                 minPos.y += area.bounds.size.z * 0.5f;
             }
-            float xPos = Random.Range(minPos.x, minPos.x + area.bounds.size.x * 0.5f);
-            float zPos = Random.Range(minPos.y, minPos.y + area.bounds.size.z * 0.5f);
+            float xPos = Random.Range(minPos.x + 0.5f, minPos.x + area.bounds.size.x * 0.5f - 0.5f);
+            float zPos = Random.Range(minPos.y + 0.5f , minPos.y + area.bounds.size.z * 0.5f - 0.5f);
             MachineBehaviour spawned = Instantiate<MachineBehaviour>(machinePrefabs[index]);
             spawned.transform.position = new Vector3(xPos, area.bounds.max.y, zPos);
             machineList.Add(spawned);
