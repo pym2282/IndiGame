@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 originScale;
     public Camera camera;
     private float time;
-
+    private SpriteRenderer _sprite;
 
     public ToolType tool;
     
@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     {
         originPos = transform.position;
         originScale = transform.localScale;
+        _sprite = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -31,12 +32,12 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                transform.localScale = new Vector3(originScale.x, originScale.y, originScale.z);
+                _sprite.flipX = false;
                 transform.position += Vector3.right * speed * Time.deltaTime;
             }
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                transform.localScale = new Vector3(-originScale.x, originScale.y, originScale.z);
+                _sprite.flipX = true;
                 transform.position += Vector3.left * speed * Time.deltaTime;
             }
             if (Input.GetKey(KeyCode.UpArrow))
@@ -52,12 +53,12 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.D))
             {
-                transform.localScale = new Vector3(originScale.x, originScale.y, originScale.z);
+                _sprite.flipX = false;
                 transform.position += Vector3.right * speed * Time.deltaTime;
             }
             if (Input.GetKey(KeyCode.A))
             {
-                transform.localScale = new Vector3(-originScale.x, originScale.y, originScale.z);
+                _sprite.flipX = true;
                 transform.position += Vector3.left * speed * Time.deltaTime;
             }
             if (Input.GetKey(KeyCode.W))
