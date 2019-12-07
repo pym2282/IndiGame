@@ -34,7 +34,6 @@ public class ToolManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         foreach (Tool tool in spawnedTools)

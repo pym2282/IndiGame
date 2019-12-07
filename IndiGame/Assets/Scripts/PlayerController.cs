@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 originScale;
     public Camera camera;
     private float time;
+    private Animator anim;
+
     private SpriteRenderer _sprite;
 
     public ToolType tool;
@@ -21,6 +23,7 @@ public class PlayerController : MonoBehaviour
     {
         originPos = transform.position;
         originScale = transform.localScale;
+        anim = GetComponent<Animator>();
         _sprite = GetComponent<SpriteRenderer>();
     }
 
@@ -28,6 +31,12 @@ public class PlayerController : MonoBehaviour
     {
         if (Time.timeScale == 0)
             return;
+        Move();
+
+    }
+
+    private void Move()
+    {
         if (isRight)
         {
             if (Input.GetKey(KeyCode.RightArrow))
@@ -87,7 +96,6 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, originPos.z - 2.5f);
         }
-
     }
 
     private void OnTriggerEnter(Collider col)
