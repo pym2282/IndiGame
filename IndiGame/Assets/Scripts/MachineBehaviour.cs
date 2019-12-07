@@ -22,7 +22,6 @@ public class MachineBehaviour : MonoBehaviour
     private float _currentHp = 100f;
     private float _recoverStoppedCounter = 0;
     private float _brokenPenaltyCounter = 0;
-    private Vector3 cameraOriginPos;
     private AudioSource mashineAudio;
     public AudioClip[] audioClip;
     public MachineState State
@@ -211,22 +210,20 @@ public class MachineBehaviour : MonoBehaviour
     {
         StartCoroutine(Paricle(particle));
         mashineColor.color = Color.white * 0.4f;
-        foreach (Camera camera in FindObjectsOfType<Camera>())
+        foreach (CameraMove camera in FindObjectsOfType<CameraMove>())
         {
             if (transform.position.x > 0)
             {
                 if (camera.gameObject.layer == LayerMask.NameToLayer("Right"))
                 {
-                    cameraOriginPos = camera.transform.position;
-                    StartCoroutine(Shake(camera.gameObject, 0.1f, 0.5f));
+                    camera.Shake(0.1f, 0.5f);
                 }
             }
             else
             {
                 if (camera.gameObject.layer == LayerMask.NameToLayer("Left"))
                 {
-                    cameraOriginPos = camera.transform.position;
-                    StartCoroutine(Shake(camera.gameObject, 0.1f, 0.5f));
+                    camera.Shake(0.1f, 0.5f);
                 }
             }
         }
@@ -268,22 +265,4 @@ public class MachineBehaviour : MonoBehaviour
         }
         hpBarImage.color = barColor;
     }
-    public IEnumerator Shake(GameObject camera, float _amount, float _duration)
-    {
-        float timer = 0;
-        while (timer <= _duration)
-        {
-            if (Time.timeScale == 0)
-                _duration = 0;
-
-            Vector3 shakeVec = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f)) * _amount + cameraOriginPos;
-            camera.transform.localPosition = shakeVec;
-
-            timer += Time.deltaTime;
-            yield return null;
-        }
-        camera.transform.localPosition = cameraOriginPos;
-
-    }
-
 }
