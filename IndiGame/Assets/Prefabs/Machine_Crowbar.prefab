@@ -180,6 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8104a28b25c844bb3a872165784e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  areaType: 0
   targetToolType: 2
   hpBarImage: {fileID: 6275752518002996197}
   isRight: 0
@@ -476,6 +477,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FillAmount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6115251977205406202, guid: a33225b77c635ae45b3f1d573bc695e4,
+        type: 3}
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6115251977205406202, guid: a33225b77c635ae45b3f1d573bc695e4,
+        type: 3}
+      propertyPath: m_FillOrigin
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a33225b77c635ae45b3f1d573bc695e4, type: 3}
