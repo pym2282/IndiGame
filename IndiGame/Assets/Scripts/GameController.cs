@@ -63,7 +63,7 @@ public class GameController : MonoBehaviour
     private void Gameover(int num)
     {
         gameoverCanvas.SetActive(true);
-        FindObjectOfType<Wall>().speed = 0;
+        timeText.gameObject.SetActive(false);
     }
 
     public void ShowRanking()
@@ -107,6 +107,7 @@ public class GameController : MonoBehaviour
         }
         playerTr[1].GetComponent<PlayerController>().isGameover = true;
         playerTr[0].GetComponent<PlayerController>().isGameover = true;
+        FindObjectOfType<Wall>().speed = 0;
         Destroy(danPos, 3);
         foreach(GameObject go in destroyObj)
         {

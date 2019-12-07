@@ -84,6 +84,11 @@ public class RankingUIBehaviour : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            CheckAndRestart();
+        }
+
 
         //if (_currentNameIndex > 0)
         //{

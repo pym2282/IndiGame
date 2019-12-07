@@ -19,7 +19,7 @@ public static class HighScoreUtil
     private static List<HighScore> _highScores;
 
     public const string HIGHSCORE_FILE_NAME = "highscores.dat";
-    public const int MAX_COUNT = 10;
+    public const int MAX_COUNT = 5;
 
     public static int GetNewHighScoreIndex(float score)
     {
@@ -101,7 +101,9 @@ public static class HighScoreUtil
         stream.Close();
     }
 
+#if UNITY_EDITOR
     [UnityEditor.MenuItem("Tools/Clear Highscore")]
+#endif
     public static void ClearHighScore()
     {
         if (File.Exists(Application.persistentDataPath + "/" + HIGHSCORE_FILE_NAME))
