@@ -35,14 +35,25 @@ public class RankingUIBehaviour : MonoBehaviour
         int index = 0;
         foreach (HighScoreUtil.HighScore highScore in HighScoreUtil.GetHighScores())
         {
+            if (index >= HighScoreUtil.MAX_COUNT)
+            {
+                break;
+            }
             if (index == playerIndex)
             {
-                _currentPlayerRanking = MakeRow(new HighScoreUtil.HighScore(_currentName.ToString(), _currentScore), playerIndex);
+                _currentPlayerRanking = MakeRow(new HighScoreUtil.HighScore(_currentName.ToString(), _currentScore), playerIndex + 1, playerIndex);
                 _currentPlayerRanking.SetColor(Color.green);
                 index++;
             }
-            MakeRow(highScore, index);
+            MakeRow(highScore, index + 1, index);
             index++;
+        }
+
+        if (_currentPlayerRanking == null)
+        {
+            _currentPlayerRanking = MakeRow(new HighScoreUtil.HighScore("you", _currentScore), -1, playerIndex);
+            _currentPlayerRanking.SetColor(Color.green);
+            _currentNameIndex = _currentName.Length;
         }
 
         _inited = true;
@@ -83,10 +94,10 @@ public class RankingUIBehaviour : MonoBehaviour
         //}
     }
 
-    private RankingRowBehaviour MakeRow(HighScoreUtil.HighScore data, int index)
+    private RankingRowBehaviour MakeRow(HighScoreUtil.HighScore data, int rank, int index)
     {
         RankingRowBehaviour obj = Instantiate(rankingContentPrefab, rankingParent);
-        obj.SetData(index + 1, data);
+        obj.SetData(rank, data);
         RectTransform rt = obj.GetComponent<RectTransform>();
         rt.anchoredPosition = new Vector2(0, -rt.sizeDelta.y * index);
         return obj;

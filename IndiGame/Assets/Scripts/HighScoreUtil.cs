@@ -100,4 +100,14 @@ public static class HighScoreUtil
         }
         stream.Close();
     }
+
+    [UnityEditor.MenuItem("Tools/Clear Highscore")]
+    public static void ClearHighScore()
+    {
+        if (File.Exists(Application.persistentDataPath + "/" + HIGHSCORE_FILE_NAME))
+        {
+            File.Delete(Application.persistentDataPath + "/" + HIGHSCORE_FILE_NAME);
+            Debug.Log($"Deleted {Application.persistentDataPath}/{HIGHSCORE_FILE_NAME}");
+        }
+    }
 }

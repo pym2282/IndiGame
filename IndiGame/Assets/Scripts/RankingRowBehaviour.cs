@@ -14,8 +14,8 @@ public class RankingRowBehaviour : MonoBehaviour
 
     public void SetData(int rank, HighScoreUtil.HighScore data)
     {
-        _rank.text = $"{rank}.";
-        _name.text = data.userName;
+        _rank.text = (rank > 0) ? $"{rank}." : "---";
+        SetUserName(data.userName);
         _score.text = data.score.ToString("0.00");
     }
 
@@ -28,6 +28,6 @@ public class RankingRowBehaviour : MonoBehaviour
 
     public void SetUserName(string name)
     {
-        _name.text = name;
+        _name.text = name.ToUpper();
     }
 }
