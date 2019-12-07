@@ -34,10 +34,12 @@ public class MachineManager : MonoBehaviour
     public float machineMinRedHp = 0f;
     public TimingFloatValuePair[] machineDamageProbabilityWithTime;
     public TimingIntValuePair[] machinePossibleDamagedCountWithTime;
+    public TimingFloatValuePair[] machineDamagePerSecWithTime;
 
     private float _machineDamageCheckCounter;
     private int _damageProbListIndex = 0;
     private int _possibleDamagedCountListIndex = 0;
+    private int _damagePerSecListIndex = 0;
     private float _elapsedTime = 0;
 
     [HideInInspector]
@@ -74,7 +76,11 @@ public class MachineManager : MonoBehaviour
             currentPossibleDamagedMachineCount = machinePossibleDamagedCountWithTime[_possibleDamagedCountListIndex].value;
             _possibleDamagedCountListIndex++;
         }
-
+        if (_damagePerSecListIndex < machineDamagePerSecWithTime.Length && machineDamagePerSecWithTime[_damagePerSecListIndex].timing <= _elapsedTime)
+        {
+            machineDamagePerSec = machineDamagePerSecWithTime[_damagePerSecListIndex].value;
+            _damagePerSecListIndex++;
+        }
         if (!CanDamageMachine())
         {
             return;
