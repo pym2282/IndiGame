@@ -6,16 +6,46 @@ using Enums;
 
 public class MachineBehaviour : MonoBehaviour
 {
-    public MachineState state = MachineState.Normal;
+    private MachineState _state = MachineState.Normal;
+    
+
     public ToolType targetToolType;
     public Image hpBarImage;
     public bool isRight;
+    public GameObject particle;
+    public GameObject smokeParticle;
+    public GameObject shockParticle;
 
     private GameController gamecontroller;
+    private SpriteRenderer mashineColor;
     private float _currentHp = 100f;
     private float _recoverStoppedCounter = 0;
     private float _brokenPenaltyCounter = 0;
-    private Vector3 cameraOriginPos;
+    private Vector3 cameraOriginPos; public MachineState state
+    {
+        get
+        {
+            return _state;
+        }
+        set
+        {
+            if (value == MachineState.Broken && _state == MachineState.Damaged)
+            {
+                BrokenMashine();
+            }
+            else if (value == MachineState.Damaged && _state == MachineState.Normal)
+            {
+                StartCoroutine(Paricle(shockParticle));
+                Debug.Log("불이야");
+            }
+            else if (value == MachineState.Normal && smokeParticle.activeInHierarchy)
+            {
+                smokeParticle.SetActive(false);
+                mashineColor.color = Color.white;
+            }
+            _state = value;
+        }
+    }
 
     // Start is called before the first frame update
     private void Start()
@@ -23,6 +53,10 @@ public class MachineBehaviour : MonoBehaviour
         gamecontroller = FindObjectOfType<GameController>();
         _currentHp = MachineManager.Instance.machineMaxHp;
         UpdateHpBar();
+        particle.SetActive(false);
+        shockParticle.SetActive(false);
+        smokeParticle.SetActive(false);
+        mashineColor = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -38,6 +72,7 @@ public class MachineBehaviour : MonoBehaviour
 
             case MachineState.Damaged:
                 AddHp(-MachineManager.Instance.machineDamagePerSec * Time.deltaTime);
+                smokeParticle.SetActive(true);
                 break;
 
             case MachineState.Broken:
@@ -45,20 +80,26 @@ public class MachineBehaviour : MonoBehaviour
                 break;
 
             case MachineState.Recovering:
+                _recoverStoppedCounter = MachineManager.Instance.machineRecoverStopTime;
                 if (_brokenPenaltyCounter > 0)
                 {
                     _brokenPenaltyCounter -= Time.deltaTime;
                     break;
                 }
                 AddHp(MachineManager.Instance.machineRecoverPerSec * Time.deltaTime);
-                _recoverStoppedCounter = MachineManager.Instance.machineRecoverStopTime;
+                
                 break;
 
             case MachineState.RecoverStopped:
                 _recoverStoppedCounter -= Time.deltaTime;
                 if (_recoverStoppedCounter <= 0)
                 {
-                    state = (_currentHp <= 0) ? MachineState.Broken : MachineState.Damaged;
+                    if(_currentHp <= 0)
+                    {
+                        state = MachineState.Broken;
+                    }
+                    else
+                    state = MachineState.Damaged;
                 }
                 break;
         }
@@ -71,11 +112,17 @@ public class MachineBehaviour : MonoBehaviour
             return;
         if (collider.GetComponent<PlayerController>().tool == targetToolType)
         {
+            if(state == MachineState.Broken)
+            {
+                if (transform.position.x > 0)
+                    gamecontroller.rightCount--;
+                else
+                    gamecontroller.leftCount--;
+
+                if (_brokenPenaltyCounter <= 0)
+                mashineColor.color = Color.white;
+            }
             state = MachineState.Recovering;
-            if (transform.position.x > 0)
-                gamecontroller.rightCount--;
-            else
-                gamecontroller.leftCount--;
 
         }
     }
@@ -94,10 +141,9 @@ public class MachineBehaviour : MonoBehaviour
     public void AddHp(float hp)
     {
         _currentHp = Mathf.Clamp(_currentHp + hp, 0f, MachineManager.Instance.machineMaxHp);
-        if (_currentHp <= 0 && state == MachineState.Damaged)
+        if (_currentHp <= 0 && state == MachineState.Damaged )
         {
             state = MachineState.Broken;
-            BrokenMashine();
             _brokenPenaltyCounter = MachineManager.Instance.machineBrokePenaltyTime;
         }
         else if (_currentHp >= MachineManager.Instance.machineMaxHp)
@@ -108,10 +154,11 @@ public class MachineBehaviour : MonoBehaviour
         UpdateHpBar();
     }
 
-    void BrokenMashine()
+    void BrokenMashine() // 기계가 부셔질 때
     {
-
-        foreach(Camera camera in FindObjectsOfType<Camera>())
+        StartCoroutine(Paricle(particle));
+        mashineColor.color = Color.white * 0.4f;
+        foreach (Camera camera in FindObjectsOfType<Camera>())
         {
             if (transform.position.x > 0)
             {
@@ -132,6 +179,13 @@ public class MachineBehaviour : MonoBehaviour
                 }
             }
         }
+    }
+
+    IEnumerator Paricle(GameObject obj)
+    {
+        obj.SetActive(true);
+        yield return new WaitForSeconds(1);
+        obj.SetActive(false);
     }
 
     private void UpdateHpBar()

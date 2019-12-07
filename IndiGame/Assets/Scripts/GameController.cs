@@ -49,5 +49,6 @@ public class GameController : MonoBehaviour
     {
         Debug.Log(SceneManager.GetActiveScene().name);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
     }
 }
