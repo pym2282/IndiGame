@@ -7,8 +7,8 @@ using Enums;
 public class MachineBehaviour : MonoBehaviour
 {
     private MachineState _state = MachineState.Normal;
-    
 
+    public PlayableArea areaType;
     public ToolType targetToolType;
     public Image hpBarImage;
     public bool isRight;
@@ -21,7 +21,8 @@ public class MachineBehaviour : MonoBehaviour
     private float _currentHp = 100f;
     private float _recoverStoppedCounter = 0;
     private float _brokenPenaltyCounter = 0;
-    private Vector3 cameraOriginPos; public MachineState state
+    private Vector3 cameraOriginPos;
+    public MachineState State
     {
         get
         {
@@ -29,6 +30,30 @@ public class MachineBehaviour : MonoBehaviour
         }
         set
         {
+            if (value == MachineState.Broken && _state != value)
+            {
+                if (areaType == PlayableArea.Left)
+                {
+                    gamecontroller.LeftOverCount();
+                }
+                else
+                {
+                    gamecontroller.RightOverCount();
+                }
+            }
+            else if (_state == MachineState.Broken && _state != value)
+            {
+                if (areaType == PlayableArea.Left)
+                {
+                    gamecontroller.leftCount--;
+                }
+                else
+                {
+                    gamecontroller.rightCount--;
+                }
+            }
+
+
             if (value == MachineState.Broken && _state == MachineState.Damaged)
             {
                 BrokenMashine();
@@ -64,7 +89,7 @@ public class MachineBehaviour : MonoBehaviour
     {
         if(Time.timeScale == 0)
             return;
-        switch (state)
+        switch (State)
         {
             case MachineState.Normal:
 
@@ -96,10 +121,10 @@ public class MachineBehaviour : MonoBehaviour
                 {
                     if(_currentHp <= 0)
                     {
-                        state = MachineState.Broken;
+                        State = MachineState.Broken;
                     }
                     else
-                    state = MachineState.Damaged;
+                    State = MachineState.Damaged;
                 }
                 break;
         }
@@ -110,20 +135,19 @@ public class MachineBehaviour : MonoBehaviour
         // 만약 플레이어가 맞는 도구를 들고있다면 state = MachineState.Recovering;
         if (!collider.CompareTag("Player"))
             return;
-        if (state != MachineState.Recovering && collider.GetComponent<PlayerController>().tool == targetToolType)
+        ToolType toolType = collider.GetComponent<PlayerController>().tool;
+        if (State != MachineState.Recovering && toolType == targetToolType)
         {
-            if(state == MachineState.Broken)
+            if(State == MachineState.Broken)
             {
-                if (transform.position.x > 0)
-                    gamecontroller.rightCount--;
-                else
-                    gamecontroller.leftCount--;
-
                 if (_brokenPenaltyCounter <= 0)
-                mashineColor.color = Color.white;
+                    mashineColor.color = Color.white;
             }
-            state = MachineState.Recovering;
-
+            State = MachineState.Recovering;
+        }
+        else if (State == MachineState.Recovering && toolType != targetToolType)
+        {
+            State = MachineState.RecoverStopped;
         }
     }
 
@@ -132,23 +156,23 @@ public class MachineBehaviour : MonoBehaviour
         // state == MachineState.Recovering일 경우 
         if (!collider.CompareTag("Player"))
             return;
-        if (state == MachineState.Recovering)
+        if (State == MachineState.Recovering)
         {
-            state = MachineState.RecoverStopped;
+            State = MachineState.RecoverStopped;
         }
     }
 
     public void AddHp(float hp)
     {
         _currentHp = Mathf.Clamp(_currentHp + hp, 0f, MachineManager.Instance.machineMaxHp);
-        if (_currentHp <= 0 && state == MachineState.Damaged )
+        if (_currentHp <= 0 && State == MachineState.Damaged )
         {
-            state = MachineState.Broken;
+            State = MachineState.Broken;
             _brokenPenaltyCounter = MachineManager.Instance.machineBrokePenaltyTime;
         }
         else if (_currentHp >= MachineManager.Instance.machineMaxHp)
         {
-            state = MachineState.Normal;
+            State = MachineState.Normal;
         }
 
         UpdateHpBar();
@@ -165,7 +189,6 @@ public class MachineBehaviour : MonoBehaviour
                 if (camera.gameObject.layer == LayerMask.NameToLayer("Right"))
                 {
                     cameraOriginPos = camera.transform.position;
-                    gamecontroller.RightOverCount();
                     StartCoroutine(Shake(camera.gameObject, 0.1f, 0.5f));
                 }
             }
@@ -174,7 +197,6 @@ public class MachineBehaviour : MonoBehaviour
                 if (camera.gameObject.layer == LayerMask.NameToLayer("Left"))
                 {
                     cameraOriginPos = camera.transform.position;
-                    gamecontroller.LeftOverCount();
                     StartCoroutine(Shake(camera.gameObject, 0.1f, 0.5f));
                 }
             }
@@ -190,7 +212,7 @@ public class MachineBehaviour : MonoBehaviour
 
     private void UpdateHpBar()
     {
-        if (state == MachineState.Normal)
+        if (State == MachineState.Normal)
         {
             hpBarImage.gameObject.SetActive(false);
             return;
@@ -198,7 +220,7 @@ public class MachineBehaviour : MonoBehaviour
         hpBarImage.gameObject.SetActive(true);
         hpBarImage.fillAmount = _currentHp / MachineManager.Instance.machineMaxHp;
         Color barColor = Color.white;
-        if (state == MachineState.Broken)
+        if (State == MachineState.Broken)
         {
             hpBarImage.fillAmount = 1f;
             barColor = Color.black;

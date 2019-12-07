@@ -100,9 +100,9 @@ public class MachineManager : MonoBehaviour
             }
             foreach (MachineBehaviour mb in list)
             {
-                if (mb.state == MachineState.Normal && Random.Range(0, 1) <= machineDamageProbability)
+                if (mb.State == MachineState.Normal && Random.Range(0, 1) <= machineDamageProbability)
                 {
-                    mb.state = MachineState.Damaged;
+                    mb.State = MachineState.Damaged;
                     break;
                 }
             }
@@ -147,6 +147,7 @@ public class MachineManager : MonoBehaviour
             float xPos = Random.Range(minPos.x, minPos.x + area.bounds.size.x * 0.5f);
             float zPos = Random.Range(minPos.y, minPos.y + area.bounds.size.z * 0.5f);
             MachineBehaviour spawned = Instantiate<MachineBehaviour>(machinePrefabs[index]);
+            spawned.areaType = areaType;
             spawned.transform.position = new Vector3(xPos, area.bounds.max.y, zPos);
             machineList.Add(spawned);
         }
@@ -158,7 +159,7 @@ public class MachineManager : MonoBehaviour
         int damagedCount = 0;
         foreach (MachineBehaviour mb in SpawnedMachines[PlayableArea.Left])
         {
-            if (mb.state == MachineState.Broken || mb.state == MachineState.Normal)
+            if (mb.State == MachineState.Broken || mb.State == MachineState.Normal)
             {
                 continue;
             }
@@ -166,7 +167,7 @@ public class MachineManager : MonoBehaviour
         }
         foreach (MachineBehaviour mb in SpawnedMachines[PlayableArea.Right])
         {
-            if (mb.state == MachineState.Broken || mb.state == MachineState.Normal)
+            if (mb.State == MachineState.Broken || mb.State == MachineState.Normal)
             {
                 continue;
             }
