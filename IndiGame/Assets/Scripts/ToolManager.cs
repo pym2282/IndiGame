@@ -52,9 +52,6 @@ public class ToolManager : MonoBehaviour
         float posZ = Random.Range(area.bounds.min.z, area.bounds.max.z);
         tool.transform.position = new Vector3(posX, toolSpawnY, posZ);
         Rigidbody rb = tool.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.velocity = Vector3.zero;
-        }
+        rb.velocity = Vector3.zero;
     }
 }
